@@ -1,46 +1,47 @@
+# Base Node.
 class Node:
-    def __init__(self, data=None, next=None, prev=None):
-        self.data = data
+    def __init__(self, item=None, next=None, prev=None):
+        self.item = item
         self.next = next
         self.prev = prev
 
+
+# Doubly Linked List Object.
 class DoublyLinkedList:
     def __init__(self):
         self.head = None
 
-    def print_forward(self):
+
+    def insertAtBeginning(self, item):
+        if self.head == None:
+            node = Node(item, self.head, None)
+            self.head = node
+        else:
+            node = Node(item, self.head, None)
+            self.head.prev = node
+            self.head = node
+
+    
+    def insertAtEnd(self, item):
         if self.head is None:
-            print("Linked list is empty")
+            self.head = Node(item, None, None)
             return
 
         itr = self.head
-        llstr = ''
-        while itr:
-            llstr += str(itr.data) + ' --> '
-            itr = itr.next
-        print(llstr)
 
-    def print_backward(self):
-        if self.head is None:
-            print("Linked list is empty")
-            return
-
-        last_node = self.get_last_node()
-        itr = last_node
-        llstr = ''
-        while itr:
-            llstr += itr.data + '-->'
-            itr = itr.prev
-        print("Link list in reverse: ", llstr)
-
-    def get_last_node(self):
-        itr = self.head
         while itr.next:
             itr = itr.next
 
-        return itr
+        itr.next = Node(item, None, itr)
 
-    def get_length(self):
+        
+    def insertValues(self, new_list):
+        self.head = None
+        for item in new_list:
+            self.insertAtEnd(item)
+
+    
+    def length(self):
         count = 0
         itr = self.head
         while itr:
@@ -48,52 +49,11 @@ class DoublyLinkedList:
             itr = itr.next
 
         return count
-
-    def insert_at_begining(self, data):
-        if self.head == None:
-            node = Node(data, self.head, None)
-            self.head = node
-        else:
-            node = Node(data, self.head, None)
-            self.head.prev = node
-            self.head = node
-
-    def insert_at_end(self, data):
-        if self.head is None:
-            self.head = Node(data, None, None)
-            return
-
-        itr = self.head
-
-        while itr.next:
-            itr = itr.next
-
-        itr.next = Node(data, None, itr)
-
-    def insert_at(self, index, data):
-        if index<0 or index>self.get_length():
-            raise Exception("Invalid Index")
-
-        if index==0:
-            self.insert_at_begining(data)
-            return
-
-        count = 0
-        itr = self.head
-        while itr:
-            if count == index - 1:
-                node = Node(data, itr.next, itr)
-                if node.next:
-                    node.next.prev = node
-                itr.next = node
-                break
-
-            itr = itr.next
-            count += 1
-
-    def remove_at(self, index):
-        if index<0 or index>=self.get_length():
-            raise Exception("Invalid Index")
+    
+    
+    def removeAt(self, index):
+        if index<0 or index>=self.length():
+            raise Exception('You have supplied an invalid index.')
 
         if index==0:
             self.head = self.head.next
@@ -111,23 +71,78 @@ class DoublyLinkedList:
 
             itr = itr.next
             count+=1
+    
+    
+    def insertAt(self, index, item):
+        if index<0 or index>self.length():
+            raise Exception('You have supplied an invalid index.')
 
-    def insert_values(self, data_list):
-        self.head = None
-        for data in data_list:
-            self.insert_at_end(data)
+        if index==0:
+            self.insertAtBeginning(item)
+            return
+
+        count = 0
+        itr = self.head
+        while itr:
+            if count == index - 1:
+                node = Node(item, itr.next, itr)
+                if node.next:
+                    node.next.prev = node
+                itr.next = node
+                break
+
+            itr = itr.next
+            count += 1
+    
+    
+    def lastNode(self):
+        itr = self.head
+        while itr.next:
+            itr = itr.next
+
+        return itr
+    
+    
+    def printForward(self):
+        if self.head is None:
+            print("Linked list is empty")
+            return
+
+        itr = self.head
+        string = ''
+        while itr:
+            string += str(itr.item) + ' -> '
+            itr = itr.next
+        print(string)
+
+    
+    def printBackward(self):
+        if self.head is None:
+            print("Linked list is empty")
+            return
+
+        lastNode = self.lastNode()
+        itr = lastNode
+        string = ''
+        while itr:
+            string += itr.item + '->'
+            itr = itr.prev
+        print(f"Reversed linked list: {string}")
 
 
 if __name__ == '__main__':
     ll = DoublyLinkedList()
-    ll.insert_values(["banana","mango","grapes","orange"])
-    ll.print_forward()
-    ll.print_backward()
-    ll.insert_at_end("figs")
-    ll.print_forward()
-    ll.insert_at(0,"jackfruit")
-    ll.print_forward()
-    ll.insert_at(6,"dates")
-    ll.print_forward()
-    ll.insert_at(2,"kiwi")
-    ll.print_forward()
+    ll.insertValues(['a', 'concise', 'implementation of', 'doublylinkedlist'])
+    ll.insertAtBeginning('This')
+    ll.insertAt(1, 'is')
+    ll.insertAtEnd('by ifunanyaScript')
+    ll.insertAtEnd('with')
+    ll.insertAtEnd('much')
+    ll.insertAtEnd('love.')
+    ll.printForward()
+    ll.removeAt(8)
+    ll.printForward()
+    ll.insertValues(['love.', 'with', 'ifunanyaScript', 'from', 'list', 'linked', 'doubly', 'A'])
+    ll.printBackward()
+
+# ifunanyaScript
