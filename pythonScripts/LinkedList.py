@@ -1,8 +1,11 @@
+# Base Node.
 class Node:
     def __init__(self, item=None, next=None):
         self.item = item
         self.next = next
         
+
+# Linked List Object.
 class LinkedList:
     def __init__(self):
         self.head = None
@@ -93,29 +96,16 @@ class LinkedList:
                 itr.next = itr.next.next
                 break
             itr = itr.next
-            
-        
-        
+                
     def print(self):
         if self.head is None:
             print('Linked List is empty')
             return
         itr = self.head
-        linkstr = ''
+        string = ''
         while itr:
-            linkstr += str(itr.item) + '->'
+            string += str(itr.item) + '->'
             itr = itr.next
-        print(linkstr)
+        print(string)
 
-
-if __name__ == "__main__":
-    ll = LinkedList()
-    ll.insertValues(['a', 'static', 'implementation of', 'linked', 'list'])
-    ll.insertAtBeginning('This')
-    ll.insertAtEnd('demo')
-    ll.insertAt(1, 'is')
-    ll.insertAfterItem('demo', 'from ifunanyaScript')
-    ll.insertAtEnd('with love')
-    ll.removeItem('implementation of')
-    ll.removeAt(3)
-    ll.print()
+# ifunanyaScript
