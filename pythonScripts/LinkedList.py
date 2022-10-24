@@ -108,4 +108,15 @@ class LinkedList:
             itr = itr.next
         print(string)
 
+if __name__ == '__main__':
+    ll = LinkedList()
+    ll.insertValues(['a', 'concise', 'implementation of', 'linked', 'list'])
+    ll.insertAtBeginning('This')
+    ll.insertAtEnd('demo')
+    ll.insertAt(1, 'is')
+    ll.insertAfterItem('demo', 'from ifunanyaScript')
+    ll.insertAtEnd('with love')
+    ll.removeItem('implementation of')
+    ll.removeAt(3)
+    ll.print()
 # ifunanyaScript
