@@ -1,4 +1,6 @@
-class Node:
+import time
+
+class Graph:
     def __init__(self, edges):
         self.edges = edges
         self.dict = {}
@@ -8,55 +10,92 @@ class Node:
             else:
                 self.dict[start] = [end]
             
-            
-    def getPath(self, start, end, path=[]):
-        path = path + [start]
+    # Returns all the links between two nodes.        
+    def get_links(self, start, end, link=[]):
+        link = link + [start]
         
         if start == end:
-            return [path]
+            return [link]
         
         if start not in self.dict:
             return []
         
-        paths = []
+        links = []
         for node in self.dict[start]:
-            if node not in path:
-                new_paths = self.getPath(node, end, path)
-                for p in new_paths:
-                    paths.append(p)
+            if node not in link:
+                n_link = self.get_links(node, end, link)
+                for l in n_link:
+                    links.append(l)
                     
-        return paths
+        return links
     
-    
-    def short(self, start, end, path=[]):
-        path = path + [start]
+    # Returns the shortest link between two nodes.
+    def shortest_link(self, start, end, link=[]):
+        link = link + [start]
+        
         if start == end:
-            return path
+            return link
         
         if start not in self.dict:
             return None
         
-        short_path = None
+        short_link = None
         for node in self.dict[start]:
-            if node not in path:
-                new_path = self.short(node, end, path)
-                if new_path:
-                    if short_path is None or len(new_path) < len(short_path):
-                        short_path = new_path
-        return short_path
+            if node not in link:
+                new_link = self.shortest_link(node, end, link)
+                if new_link:
+                    if short_link is None or len(new_link) < len(short_link):
+                        short_link = new_link
+        return short_link
 
+# Demo of Routes from places to places in Nigeria.
 if __name__ == "__main__":
+    print("This is a graph demo from ifunanyaScript\n")
+    time.sleep(1)
     routes = [
-    ("Mumbai", "Paris"),
-    ("Mumbai", "Dubai"),
-    ("Paris", "Dubai"),
-    ("Paris", "New York"),
-    ("Dubai", "New York"),
-    ("New York", "Toronto")
+    ("Ikeja", "Abeokuta"),
+    ("Onitsha", "Asaba"),
+    ("Benin", "Lokoja"),
+    ("Ikeja", "Ibadan"),
+    ("Ibadan", "Ilorin"),
+    ("Lokoja", "Abuja"),
+    ("Ado Ekiti", "Abuja"),
+    ("Onitsha", "Ikeja"),
+    ("Abeokuta", "Oshogbo"),
+    ("Oshogbo", "Ado Ekiti"),
+    ("Ilorin", "Abuja"),
+    ("Ikeja", "Lokoja"),
+    ("Abuja", "Onitsha"),
+    ("Ilorin", "Minna")
     ]
-    graph = Node(routes)
+    
+    graph = Graph(routes)
 
-    start = "Mumbai"
-    end = "New York"
+    start = "Ikeja"
+    end = "Abuja"
+    print(f"Routes from {start} to {end}: ")
+    for route in graph.get_links(start, end):
+        print(list(route))
+    print("_"*54)
+    time.sleep(1)
+    print(f"\nShortest route from {start} to {end}: ")
+    print(graph.shortest_link(start, end))
+    print("_"*35)
+    
+    start = "Abuja"
+    end = "Ikeja"
+    time.sleep(1)
+    print(f"\nRoutes from {start} to {end}: ")
+    for route in graph.get_links(start, end):
+        print(list(route))
+    print("_"*29)
+    
+    start = "Ibadan"
+    end = "Minna"
+    time.sleep(1)
+    print(f"\nRoutes from {start} to {end}: ")
+    for route in graph.get_links(start, end):
+        print(list(route))
 
-    print(f"Routes  between {start} and {end}: {graph.short(start, end)}")
+
+# ifunanyaScript 
