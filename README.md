@@ -6,3 +6,5 @@ Extensive exploration on data structures, algorithms and Big O time complexity.
 `Hash Table`  , `Stack`, `Queue`,<br>
 `Graph`, `General Tree`,<br>
 `Binary Search Tree`
+
+##### Algorithms
