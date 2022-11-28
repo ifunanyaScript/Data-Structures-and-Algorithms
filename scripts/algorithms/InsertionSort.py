@@ -8,6 +8,7 @@ def insertion_sort(array):
             j = j - 1
         array[j+1] = key
 
+
 # Running the sorting program...
 if __name__ == "__main__":
     print("This is an Insertion sort demo, from ifunanyaScript")
